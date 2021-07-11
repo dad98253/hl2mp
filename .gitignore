@@ -18,4 +18,6 @@ stats.txt
 gameinfo.txt
 hl2mp_pak_000.vpk
 hl2mp_pak_dir.vpk
+*.ztmp
+*.bz2
 
