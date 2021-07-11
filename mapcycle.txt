@@ -1,0 +1,25 @@
+// Default mapcycle file for hl2mp
+//
+// DO NOT MODIFY THIS FILE!
+// Instead, copy it to mapcycle.txt and modify that file.  If no custom mapcycle.txt file is found,
+// this file will be used as the default.
+//
+// Also, note that the "mapcyclefile" convar can be used to specify a particular mapcycle file.
+
+asc_new_killbox1
+dm_arctic_vendetta_snow_v22
+dm_lockdown
+dm_mousekitchen_2012_cll
+dm_playground_deluxe
+dm_powerhouse
+rocks_resistance_v3_drb
+dm_sneaky_bastards_v4
+dm_steamlab
+dm_snowblind
+dm_wooden_towers
+halls3
+junkcity_pro
+tower_dust_city4
+dm_underpass
+walmart_urban_chaos_v3
+

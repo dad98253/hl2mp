@@ -1,0 +1,81 @@
+//sv_allowupload 1 
+//sv_allowdownload 1 
+//exec autoexec.cfg
+
+/////////////////////////////////////////////////
+
+// read in any bans. this needs to be done at the start to give the server
+// time to process them before we ask them to be written back out.
+exec banned_user.cfg
+exec banned_ip.cfg
+
+hostname "Kuras HL²DM Server - Kuala Lumpur [low grav/high kill]"
+exec rcon.cfg
+sv_password ""
+
+//sv_downloadurl "http://bye.site.nfoservers.com/csgo"
+//sv_allowdownload 1
+//sv_allowupload 1
+
+sv_cheats 0
+sv_lan 0
+
+
+// These are important for performance reasons. FPS needs to be 0
+// in order to maintain a high FPS (the default is 300) and therefore
+// prevent missed ticks; having a high sv_minrate makes sure that
+// clients don't get choke.
+fps_max 0
+sv_minrate 128000
+sv_maxrate 0
+// We could also require clients to have a high cmdrate here,
+// so that they have a smoother gameplay experience.
+// 128 is the maximum supported by the engine.
+sv_mincmdrate 128
+// The engine does not support sv_minupdaterate as of 8/23/2012.
+// This is unlike CS:S.
+
+// write out any bans
+writeid
+writeip
+
+// further settings can be adjusted in "cfg/autoexec.cfg" and "gametypes.txt".
+// "cfg/autoexec.cfg" is used to define the default map, mapcycle, and game 
+// mode, and "gametypes.txt" can be used to define settings like the ones
+// above, and others, on a finer-grained level, as well as to set up the
+// "map groups", which determine which maps are played for each game mode.
+sv_region 4
+log 1
+
+// Server Settings
+maxplayers 19
+mp_fraglimit 100 // kills before map change
+mp_timelimit 20 // timelimit on each map
+mp_weaponstay 0 // weapons stay after being picked up
+mp_forcerespawn 0 // force player respawn after 4 seconds
+mp_falldamage 0 // extra damage when falling
+mp_teamplay 0 // set to 1 to enable teamplay
+// mp_teamlist "hgrunt;scientist" // team models, if mp_teamplay = 1
+sv_hl2mp_weapon_respawn_time 20 // time between weapon respawns
+sv_hl2mp_item_respawn_time 30 // time between non-weapon respawns
+mp_footsteps 1 // enable footstep sounds
+mp_flashlight 1 // flashlight in-game availability 1=yes 0=no
+mp_autocrosshair 1 // show crosshairs
+decalfrequency 1 // amount of decal/sprays visible
+mp_allowNPCs 1 // allow computer-controlled characters
+sv_alltalk 0
+sv_gravity 75 // server gravity level (default=600)
+//sv_stopspeed 100 // speed at which a player stops while running
+sv_noclipaccelerate 5
+sv_noclipspeed 5
+sv_specaccelerate 3
+sv_specnoclip 1
+mp_friendlyfire 0 // friendly fire, 0=off, 1=on
+coop 0 // cooperative play mode
+deathmatch 1 // deathmatch mode enabled = 1
+sv_voiceenable 1 // enable speech in-game
+sv_pausable 0 // enable server pausing
+sv_cheats 0 // disable cheats = 0
+ip 110.4.47.230   // to avoid rcon problems put the server ip here
+tv_enable 1
+

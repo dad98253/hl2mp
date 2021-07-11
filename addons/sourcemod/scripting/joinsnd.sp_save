@@ -1,0 +1,166 @@
+/**
+ * AutoExecConfig 
+ *
+ * Copyright (C) 2013-2019 Impact
+ *  No indicvated  copyright on original join sound pligin (see https://forums.alliedmods.net/showthread.php?p=552491)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>
+ */
+ 
+#include <sourcemod>
+//#include <profiler>
+
+#pragma semicolon 1
+#pragma newdecls required
+#include "autoexecconfig"
+
+
+//Handle g_hProf;
+
+#include <sdktools>
+#include <sdktools_sound>
+
+#pragma semicolon 1
+#define MAX_FILE_LEN 80
+
+//new Handle:g_CvarSoundName = INVALID_HANDLE;
+//new String:g_soundName[MAX_FILE_LEN];
+Handle g_CvarSoundName = INVALID_HANDLE;
+char g_soundName[MAX_FILE_LEN];
+
+#define PLUGIN_VERSION "0.0.2"
+
+public Plugin myinfo = 
+{
+        name = "Welcome Sound",
+        author = "R-Hehl",
+        description = "Plays Welcome Sound to connecting Players",
+        version = PLUGIN_VERSION,
+        url = "http://www.compactaim.de/"
+}
+
+public void OnPluginStart()
+{
+//	g_hProf = CreateProfiler();
+//	StartProfiling(g_hProf);
+	
+	
+	bool appended;
+	bool error;
+	
+	
+	// Order of this is important, the setting has to be known before we set the file path
+	AutoExecConfig_SetCreateDirectory(true);
+	
+	// We want to let the include file create the file if it doesnt exists already, otherwise we let sourcemod create it
+	AutoExecConfig_SetCreateFile(true);
+	
+	// Set file, extension is optional aswell as the second parameter which defaults to sourcemod
+	AutoExecConfig_SetFile("autoexecconfigtest", "sourcemod");
+
+        // Create the rest of the cvars
+	AutoExecConfig_CreateConVar("sm_welcome_snd_version", PLUGIN_VERSION, "Welcome Sound Version", FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY);
+
+        SetAppend(appended);
+        SetError(error);
+
+	g_CvarSoundName = AutoExecConfig_CreateConVar("sm_join_sound", "consnd/joinserver.mp3", "The sound to play");
+
+	
+	SetAppend(appended);
+	SetError(error);
+	
+	
+	// Execute the given config
+	AutoExecConfig_ExecuteFile();
+	
+	
+	
+	// Cleaning is an relatively expensive file operation
+	if (appended)
+	{
+		PrintToServer("Some convars were appended to the config, clean it up");
+		AutoExecConfig_CleanFile();
+	}
+	
+	if (error)
+	{
+		PrintToServer("Non successfull result occured, last find/append result: %d, %d", AutoExecConfig_GetFindResult(), AutoExecConfig_GetAppendResult());
+	}
+	
+
+
+//	StopProfiling(g_hProf);
+	
+//	float fProfilerTime = GetProfilerTime(g_hProf);
+//	PrintToServer("Benchmark: %f seconds, %f milliseconds", fProfilerTime, fProfilerTime * 1000);
+//	PrintToServer("Benchmark needed approximately %f %% of 1 Second", CalculateFloatPercentage(fProfilerTime, 0.01));
+//	PrintToServer("Benchmark needed approximately %f %% of 1 Frame", CalculateFloatPercentage(fProfilerTime, 0.01 / 66.7));
+}
+
+//public OnConfigsExecuted()
+public void OnConfigsExecuted()
+{
+        GetConVarString(g_CvarSoundName, g_soundName, MAX_FILE_LEN);
+//        decl String:buffer[MAX_FILE_LEN];
+        char buffer[MAX_FILE_LEN];
+        if (PrecacheSound(g_soundName, true)) {
+		PrintToServer("Precache of %s succesful",g_soundName);	
+	} else {
+		PrintToServer("Precache of %s FAILED ----",g_soundName);
+	}
+        Format(buffer, sizeof(buffer), "sound/%s", g_soundName);
+	PrintToServer("Adding %s to Downloads Table",buffer);
+        AddFileToDownloadsTable(buffer);
+}
+
+//public OnClientPostAdminCheck(client)
+public void OnClientPostAdminCheck(int client)
+{
+	EmitSoundToClient(client,g_soundName);
+}
+
+
+void SetAppend(bool &appended)
+{
+	if (AutoExecConfig_GetAppendResult() == AUTOEXEC_APPEND_SUCCESS)
+	{
+		appended = true;
+	}
+}
+
+
+void SetError(bool &error)
+{
+	int findRes = AutoExecConfig_GetAppendResult();
+	int appendRes = AutoExecConfig_GetFindResult();
+	
+	if ( (findRes != -1 && findRes != AUTOEXEC_APPEND_SUCCESS) ||
+	     (appendRes != -1 && appendRes != AUTOEXEC_FIND_SUCCESS) )
+	{
+		error = true;
+	}
+}
+
+
+
+stock float CalculateFloatPercentage(float value1, float value2)
+{
+	if (value1 == 0.0 || value2 == 0.0)
+	{	
+		return 0.0;
+	}
+	
+	return (value1 / value2);
+}

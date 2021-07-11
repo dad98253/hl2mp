@@ -1,0 +1,5 @@
+sv_allowupload 1 
+sv_allowdownload 1 
+//sv_send_resources 1 
+//sv_send_logos 1
+exec autoexec.cfg
