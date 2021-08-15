@@ -1,0 +1,52 @@
+"Phrases"
+{
+	"Weapon Zoom" 
+	{
+		"en"	"Weapon Zoom"
+		
+	}
+
+	"On"
+	{
+		"en" 	"On"
+	}
+
+	"Off"
+	{
+		"en"	"Off"
+	}
+	
+	"Enabled"
+	{
+		"en"	"Enabled"
+	}
+
+	"Not on attack2"
+	{
+		"en"	"Not on attack2"
+	}
+
+	"Hear ICU sound"
+	{
+		"en"	"Hear ICU sound"
+	}
+	
+	"Emit ICU sound"
+	{
+		"en"	"Emit ICU sound"
+	}
+	"Show Help"
+	{
+		"en"	"Show Help"
+	}
+
+	"Maximum Zoom"
+	{
+		"en"	"Maximum Zoom"
+	}
+	
+	"Weapon Zoom Help"
+	{
+		"en"	"Weapon Zoom Help"
+	}
+}

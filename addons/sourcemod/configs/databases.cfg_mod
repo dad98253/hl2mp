@@ -31,4 +31,16 @@
 		//"timeout"			"0"
 		//"port"			"0"
 	}
+
+	"donators"
+        {
+                "driver"                        "mysql"
+                "host"                          "localhost"
+                "database"                      "donators"
+                "user"                          "steam"
+                "pass"                          "XXXXXXXX"
+                //"timeout"                     "0"
+                //"port"                        "0"
+        }
+
 }
