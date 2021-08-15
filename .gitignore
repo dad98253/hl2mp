@@ -6,6 +6,7 @@ addons/sourcemod/logs/
 addons/sourcemod/data/
 addons/sourcemod/old-stuff/
 addons/sourcemod/configs/admins.cfg
+addons/sourcemod/configs/databases.cfg
 logs/
 bin/
 download/
